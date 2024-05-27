@@ -1,0 +1,8 @@
+WARNING (pytensor.tensor.blas): Using NumPy C-API based implementation for BLAS functions.
+Auto-assigning NUTS sampler...
+Initializing NUTS using jitter+adapt_diag...
+Multiprocess sampling (4 chains in 4 jobs)
+NUTS: [a_prima, c_prima]
+Sampling 4 chains, 0 divergences ━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:00 / 0:00:14
+Sampling 4 chains for 2_000 tune and 4_000 draw iterations (8_000 + 16_000 draws total) took 14 seconds.
+asdf
