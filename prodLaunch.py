@@ -137,7 +137,7 @@ def main():
     # np.save('resultados.npy', resultados)
 
     # resultados resolucion
-    params = [(t1, p1) for p1 in np.linspace(9000, 11000, 50) for t1 in np.linspace(0, 2000, 100)]
+    params = [(t1, p1) for p1 in np.linspace(9000, 11000, 50) for t1 in np.linspace(0, 2000, 50)]
     resultados = Parallel(n_jobs=44)(delayed(compute_result)(t1, p1) for t1, p1 in params)
     resultados = np.array(resultados)
     np.save('resultados_resolucion.npy', resultados)
