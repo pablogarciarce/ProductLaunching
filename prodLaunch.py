@@ -4,6 +4,7 @@ from scipy.special import comb
 from scipy.optimize import minimize
 import pymc as pm
 from joblib import Parallel, delayed
+from tqdm import tqdm
 
 
 def estimate_a_c(cum_days, errors):
@@ -46,23 +47,22 @@ def get_trace(a_est, c_est, cum_days, errors):
 
 
 def sample_random_ac(trace, num_pairs):
-    n_samples = trace.posterior.sizes["draw"]  # Number of samples
-    n_chains = trace.posterior.sizes["chain"]  # Number of chains
+    n_samples = trace.posterior.sizes["draw"]  # Número de muestras
+    n_chains = trace.posterior.sizes["chain"]  # Número de cadenas
 
-    # Select randomly
-    random_indices = np.random.choice(n_samples * n_chains, num_pairs)  
+    # Seleccionar aleatoriamente pares de valores
+    random_indices = np.random.choice(n_samples * n_chains, num_pairs)  # Índices aleatorios
 
-    random_ac = []
-    for idx in random_indices:
-        chain_index = idx // n_samples 
-        draw_index = idx % n_samples  
-        
-        # Extract values from chain
-        a = trace.posterior["a_prima"].isel(chain=chain_index, draw=draw_index).item()
-        c = trace.posterior["c_prima"].isel(chain=chain_index, draw=draw_index).item()
-        
-        random_ac.append((a, c)) 
-    return np.array(random_ac)
+    chain_indices = random_indices // n_samples  # Índices de la cadena
+    draw_indices = random_indices % n_samples  # Índices de la muestra dentro de la cadena
+
+    # Extraer valores de la cadena posterior usando indexación avanzada
+    a_values = trace.posterior["a_prima"].values[chain_indices, draw_indices]
+    c_values = trace.posterior["c_prima"].values[chain_indices, draw_indices]
+
+    # Combinar los valores a y c en pares
+    random_ac = np.column_stack((a_values, c_values))
+    return random_ac
 
 
 def utility_func(x, rho1):
@@ -85,7 +85,7 @@ def compute_expected_utility_vec_random_ac(trace, t1, p1, c11, c21, c31, n, T, i
 
     # Generating buyer random variables
     w = dirichlet.rvs([1, 1, 1], size=ite)
-    rho = gamma.rvs(5, scale=1/5, size=ite)
+    rho = gamma.rvs(10, scale=1/10, size=ite)
 
     # Generating random variables for j=1
     acs = sample_random_ac(trace, ite)
@@ -112,7 +112,7 @@ def compute_expected_utility_vec_random_ac(trace, t1, p1, c11, c21, c31, n, T, i
     return util, pi
 
 
-def main():
+def main(njobs=44):
     cum_days = np.array([9, 21, 32, 36, 43, 45, 50, 58, 63, 70, 71, 77, 78, 87, 91, 92, 95, 98, 104, 105, 116, 149, 156, 247, 249, 250])
     errors = np.arange(len(cum_days)) + 1
 
@@ -127,48 +127,48 @@ def main():
 
     # Define la función para calcular el resultado para un par (t1, p1)
     def compute_result(t1, p1):
-        util, prob = compute_expected_utility_vec_random_ac(trace, t1, p1, c11, c21, c31, n, T, ite=100000)
+        util, prob = compute_expected_utility_vec_random_ac(trace, t1, p1, c11, c21, c31, n, T, ite=1000000)
         return p1, t1, util, prob
 
-    # # resultados generales
-    # params = [(t1, p1) for p1 in np.linspace(3000, 15000, 100) for t1 in np.linspace(0, 2000, 100)]
-    # resultados = Parallel(n_jobs=44)(delayed(compute_result)(t1, p1) for t1, p1 in params)
-    # resultados = np.array(resultados)
-    # np.save('resultados.npy', resultados)
+    # resultados generales
+    params = [(t1, p1) for p1 in np.linspace(3000, 15000, 100) for t1 in np.linspace(0, 2000, 100)]
+    resultados = Parallel(n_jobs=njobs)(delayed(compute_result)(t1, p1) for t1, p1 in params)
+    resultados = np.array(resultados)
+    np.save('resultados.npy', resultados)
 
     # resultados resolucion
     params = [(t1, p1) for p1 in np.linspace(9000, 11000, 50) for t1 in np.linspace(0, 2000, 50)]
-    resultados = Parallel(n_jobs=44)(delayed(compute_result)(t1, p1) for t1, p1 in params)
+    resultados = Parallel(n_jobs=njobs)(delayed(compute_result)(t1, p1) for t1, p1 in params)
     resultados = np.array(resultados)
     np.save('resultados_resolucion.npy', resultados)
 
-    # # Define la función para calcular el resultado para un par (t1, p1, rho1)
-    # def compute_result(t1, p1, rho1):
-    #     util, prob = compute_expected_utility_vec_random_ac(trace, t1, p1, c11, c21, c31, n, T, ite=100000, rho1=rho1)
-    #     return p1, t1, util, prob, rho1
-    # # resultados rho
-    # params = [(t1, p1, rho1) 
-    #           for p1 in np.linspace(9000, 11000, 50) 
-    #           for t1 in np.linspace(500, 700, 50)
-    #           for rho1 in [-1e-6, -1e-7, -1e-8, None, 1e-8, 1e-7, 1e-6]]
-    # resultados = Parallel(n_jobs=44)(delayed(compute_result)(t1, p1, rho1) for t1, p1, rho1 in params)
-    # resultados = np.array(resultados)
-    # np.save('resultados_rho.npy', resultados)
+    # Define la función para calcular el resultado para un par (t1, p1, rho1)
+    def compute_result(t1, p1, rho1):
+        util, prob = compute_expected_utility_vec_random_ac(trace, t1, p1, c11, c21, c31, n, T, ite=1000000, rho1=rho1)
+        return p1, t1, util, prob, rho1
+    # resultados rho
+    params = [(t1, p1, rho1) 
+              for p1 in np.linspace(9000, 11000, 50) 
+              for t1 in np.linspace(500, 700, 50)
+              for rho1 in [-1e-6, -1e-7, -1e-8, None, 1e-8, 1e-7, 1e-6]]
+    resultados = Parallel(n_jobs=njobs)(delayed(compute_result)(t1, p1, rho1) for t1, p1, rho1 in params)
+    resultados = np.array(resultados)
+    np.save('resultados_rho.npy', resultados)
 
-    # # Define la función para calcular el resultado para un par (t1, p1, c31)
-    # def compute_result(t1, p1, c31_param):
-    #     util, prob = compute_expected_utility_vec_random_ac(trace, t1, p1, c11, c21, c31_param, n, T, ite=100000)
-    #     return p1, t1, util, prob, c31_param
-    # # resultados c31
-    # params = [(t1, p1, c31) 
-    #           for p1 in np.linspace(9000, 11000, 50) 
-    #           for t1 in np.linspace(500, 700, 50)
-    #           for c31 in np.linspace(1, 20, 40)]
-    # resultados = Parallel(n_jobs=44)(delayed(compute_result)(t1, p1, c31) for t1, p1, c31 in params)
-    # resultados = np.array(resultados)
-    # np.save('resultados_c31.npy', resultados)
+    # Define la función para calcular el resultado para un par (t1, p1, c31)
+    def compute_result(t1, p1, c31_param):
+        util, prob = compute_expected_utility_vec_random_ac(trace, t1, p1, c11, c21, c31_param, n, T, ite=1000000)
+        return p1, t1, util, prob, c31_param
+    # resultados c31
+    params = [(t1, p1, c31) 
+              for p1 in np.linspace(9000, 11000, 50) 
+              for t1 in np.linspace(500, 700, 50)
+              for c31 in np.linspace(1, 40, 40)]
+    resultados = Parallel(n_jobs=njobs)(delayed(compute_result)(t1, p1, c31) for t1, p1, c31 in params)
+    resultados = np.array(resultados)
+    np.save('resultados_c31.npy', resultados)
 
 
 if __name__ == '__main__':
-    main()
+    main(njobs=66)
     
