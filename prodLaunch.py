@@ -5,6 +5,7 @@ from scipy.optimize import minimize
 import pymc as pm
 from joblib import Parallel, delayed
 from tqdm import tqdm
+import arviz as az
 
 
 def estimate_a_c(cum_days, errors):
@@ -71,10 +72,10 @@ def utility_func(x, rho1):
     return (1 - np.exp(-rho1 * x)) / rho1
 
 
-def compute_expected_utility_vec_random_ac(trace, t1, p1, c11, c21, c31, n, T, ite=5000, rho1=None):    
+def compute_expected_utility_vec_random_ac(trace, t1, p1, c11, c21, c31, n, T, ite=5000, rho1=None, fact=100):    
     # Generating random variables for j=2,3
     ts = uniform.rvs(loc=0, scale=2000, size=(ite, 2))
-    ps = uniform.rvs(loc=3000, scale=15000, size=(ite, 2))
+    ps = uniform.rvs(loc=3000, scale=12000, size=(ite, 2))
     aes = norm.rvs(loc=0.256, scale=0.05, size=(ite, 2))
     aes[aes<0.01] = 0.01
     cs = norm.rvs(loc=0.837, scale=0.05, size=(ite, 2))
@@ -104,23 +105,25 @@ def compute_expected_utility_vec_random_ac(trace, t1, p1, c11, c21, c31, n, T, i
     # Computing probability of choice
     pi = (1 / (1 + np.exp(u2) + np.exp(u3))).mean()
     # Estimating the cost
-    c1 = (c11 * t1 + c21 * e1 + c31 * q1).mean()
+    c1 = fact * (c11 * t1 + c21 * e1 + c31 * q1).mean()
 
     # Estimating expected utility
     util = np.sum([comb(n, l) * pi**l * (1 - pi)**(n - l) * utility_func(l * p1 - c1, rho1) for l in range(n+1)])
-
-    if rho is not None:
-        profit = np.sum([comb(n, l) * pi**l * (1 - pi)**(n - l) * (l * p1 - c1) for l in range(n+1)])
+    
+    profit = np.sum([comb(n, l) * pi**l * (1 - pi)**(n - l) * (l * p1 - c1) for l in range(n+1)])
 
     return util, pi, profit
 
 
 def main(njobs=44):
-    cum_days = np.array([9, 21, 32, 36, 43, 45, 50, 58, 63, 70, 71, 77, 78, 87, 91, 92, 95, 98, 104, 105, 116, 149, 156, 247, 249, 250])
-    errors = np.arange(len(cum_days)) + 1
+    try:
+        trace = az.from_netcdf('trace.nc')
+    except FileNotFoundError:
+        cum_days = np.array([9, 21, 32, 36, 43, 45, 50, 58, 63, 70, 71, 77, 78, 87, 91, 92, 95, 98, 104, 105, 116, 149, 156, 247, 249, 250])
+        errors = np.arange(len(cum_days)) + 1
 
-    a_est, c_est = estimate_a_c(cum_days, errors)
-    trace = get_trace(a_est, c_est, cum_days, errors)
+        a_est, c_est = estimate_a_c(cum_days, errors)
+        trace = get_trace(a_est, c_est, cum_days, errors)
 
     c11 = 0.5
     c21 = 1
@@ -130,7 +133,7 @@ def main(njobs=44):
 
     # # Define la función para calcular el resultado para un par (t1, p1)
     # def compute_result(t1, p1):
-    #     util, prob = compute_expected_utility_vec_random_ac(trace, t1, p1, c11, c21, c31, n, T, ite=1000000)
+    #     util, prob, _ = compute_expected_utility_vec_random_ac(trace, t1, p1, c11, c21, c31, n, T, ite=1000000)
     #     return p1, t1, util, prob
 
     # # resultados generales
@@ -160,18 +163,18 @@ def main(njobs=44):
 
     # Define la función para calcular el resultado para un par (t1, p1, c31)
     def compute_result(t1, p1, c31_param):
-        util, prob, _ = compute_expected_utility_vec_random_ac(trace, t1, p1, c11, c21, c31_param, n, T, ite=2000000)
+        util, prob, _ = compute_expected_utility_vec_random_ac(trace, t1, p1, c11, c21, c31_param, n, T, ite=1000000)
         return p1, t1, util, prob, c31_param
     # resultados c31
     params = [(t1, p1, c31) 
               for p1 in np.linspace(9000, 11000, 50) 
-              for t1 in np.linspace(500, 900, 100)
+              for t1 in np.linspace(500, 2000, 100)
               for c31 in np.linspace(1, 40, 40)]
     resultados = Parallel(n_jobs=njobs)(delayed(compute_result)(t1, p1, c31) for t1, p1, c31 in tqdm(params))
     resultados = np.array(resultados)
-    np.save('resultados_c31.npy')
+    np.save('resultados_c31.npy', resultados)
 
 
 if __name__ == '__main__':
-    main(njobs=66)
+    main(njobs=44)
     
