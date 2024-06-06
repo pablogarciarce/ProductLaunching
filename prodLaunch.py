@@ -79,10 +79,8 @@ def compute_expected_utility_vec_random_ac(trace, t1, p1, c11, c21, c31, n, T, i
     aes = norm.rvs(loc=0.256, scale=0.05, size=(ite, 2))
     aes[aes<0.01] = 0.01
     cs = norm.rvs(loc=0.837, scale=0.05, size=(ite, 2))
-    lambda23T = aes * T ** cs
-    lambda23t = aes * ts ** cs
-    qs = poisson.rvs(lambda23T) - poisson.rvs(lambda23t)
-    qs[qs<0.1] = 0
+    lambda23Tt = aes * (T ** cs - ts ** cs)
+    qs = poisson.rvs(lambda23Tt)
 
     # Generating buyer random variables
     w = dirichlet.rvs([1, 1, 1], size=ite)
@@ -92,10 +90,10 @@ def compute_expected_utility_vec_random_ac(trace, t1, p1, c11, c21, c31, n, T, i
     acs = sample_random_ac(trace, ite)
     lambda1_t1 = acs[:, 0] * t1 ** acs[:, 1]
     lambda1_T = acs[:, 0] * T ** acs[:, 1]
+    lambda1_Tt = acs[:, 0] * (T ** acs[:, 1] - t1 ** acs[:, 1])
     e1 = poisson.rvs(lambda1_t1, size=ite)
     eT = poisson.rvs(lambda1_T, size=ite)
-    q1 = eT - e1
-    q1[q1<0.1] = 0
+    q1 = poisson.rvs(lambda1_Tt, size=ite)
 
     # Computing utility
     u1 = 1 - np.exp(-rho * (-w[:, 0] * t1 / T - w[:, 1] * p1 / 5000 - w[:, 2] * q1 / eT))
@@ -168,7 +166,7 @@ def main(njobs=44):
     # resultados c31
     params = [(t1, p1, c31) 
               for p1 in np.linspace(9000, 11000, 50) 
-              for t1 in np.linspace(500, 2000, 100)
+              for t1 in np.linspace(400, 2000, 100)
               for c31 in np.linspace(1, 40, 40)]
     resultados = Parallel(n_jobs=njobs)(delayed(compute_result)(t1, p1, c31) for t1, p1, c31 in tqdm(params))
     resultados = np.array(resultados)
