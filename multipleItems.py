@@ -1,5 +1,5 @@
 import numpy as np
-from scipy.stats import dirichlet, gamma, uniform, poisson, norm
+from scipy.stats import dirichlet, gamma, uniform, poisson, beta
 from scipy.optimize import minimize
 import pymc as pm
 from joblib import Parallel, delayed
@@ -32,8 +32,8 @@ def get_trace(a_est, c_est, cum_days, errors):
     a_prima_est = a_est / (c_est + 1)
     c_prima_est = c_est + 1
     with pm.Model() as model:    
-        a_prima = pm.Gamma('a_prima', alpha=10*a_prima_est**2, beta=10*a_prima_est) 
-        c_prima = pm.Gamma('c_prima', alpha=10*c_prima_est**2, beta=10*c_prima_est)
+        a_prima = pm.Gamma('a_prima', alpha=100*a_prima_est**2, beta=100*a_prima_est) 
+        c_prima = pm.Gamma('c_prima', alpha=100*c_prima_est**2, beta=100*c_prima_est)
         m_t = a_prima * cum_days ** c_prima
 
         # a = pm.Exponential('a', lam=a_est)  
@@ -97,9 +97,10 @@ def compute_expected_utility_multiple_items(trace, t1, p1, c11, c21, c31, n, T, 
     # Generating random variables for j=2,3
     ts = uniform.rvs(loc=0, scale=2000, size=(ite, 2))
     ps = uniform.rvs(loc=3000, scale=12000, size=(ite, 2))
-    aes = norm.rvs(loc=0.256, scale=0.05, size=(ite, 2))
-    aes[aes<0.01] = 0.01
-    cs = norm.rvs(loc=0.837, scale=0.05, size=(ite, 2))
+    aes = gamma.rvs(.256**2/.2**2, scale=.2**2/.256, size=(ite, 2))  # so it has mean .256 and variance .04
+    mean = .837
+    std = .2
+    cs = beta.rvs(mean*(mean*(1-mean)/std**2-1), (1-mean)*(mean*(1-mean)/std**2-1), size=(ite, 2))
     lambda23Tt = aes * (T ** cs - ts ** cs)
     qs = poisson.rvs(lambda23Tt)
 

@@ -1,5 +1,5 @@
 import numpy as np
-from scipy.stats import dirichlet, gamma, uniform, poisson, norm
+from scipy.stats import dirichlet, gamma, uniform, poisson, beta
 from scipy.special import comb
 from scipy.optimize import minimize
 import pymc as pm
@@ -33,8 +33,8 @@ def get_trace(a_est, c_est, cum_days, errors):
     a_prima_est = a_est / (c_est + 1)
     c_prima_est = c_est + 1
     with pm.Model() as model:    
-        a_prima = pm.Gamma('a_prima', alpha=10*a_prima_est**2, beta=10*a_prima_est) 
-        c_prima = pm.Gamma('c_prima', alpha=10*c_prima_est**2, beta=10*c_prima_est)
+        a_prima = pm.Gamma('a_prima', alpha=100*a_prima_est**2, beta=100*a_prima_est) 
+        c_prima = pm.Gamma('c_prima', alpha=100*c_prima_est**2, beta=100*c_prima_est)
         m_t = a_prima * cum_days ** c_prima
 
         # a = pm.Exponential('a', lam=a_est)  
@@ -76,9 +76,10 @@ def compute_expected_utility_vec_random_ac(trace, t1, p1, c11, c21, c31, n, T, i
     # Generating random variables for j=2,3
     ts = uniform.rvs(loc=0, scale=2000, size=(ite, 2))
     ps = uniform.rvs(loc=3000, scale=12000, size=(ite, 2))
-    aes = norm.rvs(loc=0.256, scale=0.05, size=(ite, 2))
-    aes[aes<0.01] = 0.01
-    cs = norm.rvs(loc=0.837, scale=0.05, size=(ite, 2))
+    aes = gamma.rvs(.256**2/.2**2, scale=.2**2/.256, size=(ite, 2))  # so it has mean .256 and variance .04
+    mean = .837
+    std = .2
+    cs = beta.rvs(mean*(mean*(1-mean)/std**2-1), (1-mean)*(mean*(1-mean)/std**2-1), size=(ite, 2))
     lambda23Tt = aes * (T ** cs - ts ** cs)
     qs = poisson.rvs(lambda23Tt)
 
@@ -117,11 +118,13 @@ def main(njobs=44):
     try:
         trace = az.from_netcdf('trace.nc')
     except FileNotFoundError:
+        print('No trace found, generating new one')
         cum_days = np.array([9, 21, 32, 36, 43, 45, 50, 58, 63, 70, 71, 77, 78, 87, 91, 92, 95, 98, 104, 105, 116, 149, 156, 247, 249, 250])
         errors = np.arange(len(cum_days)) + 1
 
         a_est, c_est = estimate_a_c(cum_days, errors)
         trace = get_trace(a_est, c_est, cum_days, errors)
+        trace.to_netcdf('trace.nc')
 
     c11 = 0.5
     c21 = 1
@@ -129,35 +132,35 @@ def main(njobs=44):
     n = 1000
     T = 2000
 
-    # # Define la función para calcular el resultado para un par (t1, p1)
-    # def compute_result(t1, p1):
-    #     util, prob, _ = compute_expected_utility_vec_random_ac(trace, t1, p1, c11, c21, c31, n, T, ite=1000000)
-    #     return p1, t1, util, prob
+    # Define la función para calcular el resultado para un par (t1, p1)
+    def compute_result(t1, p1):
+        util, prob, _ = compute_expected_utility_vec_random_ac(trace, t1, p1, c11, c21, c31, n, T, ite=1000000)
+        return p1, t1, util, prob
 
-    # # resultados generales
-    # params = [(t1, p1) for p1 in np.linspace(3000, 15000, 100) for t1 in np.linspace(0, 2000, 100)]
-    # resultados = Parallel(n_jobs=njobs)(delayed(compute_result)(t1, p1) for t1, p1 in tqdm(params))
-    # resultados = np.array(resultados)
-    # np.save('resultados.npy', resultados)
+    # resultados generales
+    params = [(t1, p1) for p1 in np.linspace(3000, 15000, 100) for t1 in np.linspace(0, 2000, 100)]
+    resultados = Parallel(n_jobs=njobs)(delayed(compute_result)(t1, p1) for t1, p1 in tqdm(params))
+    resultados = np.array(resultados)
+    np.save('resultados.npy', resultados)
 
-    # # resultados resolucion
-    # params = [(t1, p1) for p1 in np.linspace(9000, 11000, 50) for t1 in np.linspace(0, 2000, 50)]
-    # resultados = Parallel(n_jobs=njobs)(delayed(compute_result)(t1, p1) for t1, p1 in tqdm(params))
-    # resultados = np.array(resultados)
-    # np.save('resultados_resolucion.npy', resultados)
+    # resultados resolucion
+    params = [(t1, p1) for p1 in np.linspace(9000, 9500, 50) for t1 in np.linspace(0, 2000, 50)]
+    resultados = Parallel(n_jobs=njobs)(delayed(compute_result)(t1, p1) for t1, p1 in tqdm(params))
+    resultados = np.array(resultados)
+    np.save('resultados_resolucion.npy', resultados)
 
-    # # Define la función para calcular el resultado para un par (t1, p1, rho1)
-    # def compute_result(t1, p1, rho1):
-    #     util, prob, profit = compute_expected_utility_vec_random_ac(trace, t1, p1, c11, c21, c31, n, T, ite=1000000, rho1=rho1)
-    #     return p1, t1, util, prob, profit, rho1
-    # # resultados rho
-    # params = [(t1, p1, rho1) 
-    #           for p1 in np.linspace(9000, 11000, 50) 
-    #           for t1 in np.linspace(500, 700, 50)
-    #           for rho1 in [-1e-6, -1e-7, -1e-8, None, 1e-8, 1e-7, 1e-6]]
-    # resultados = Parallel(n_jobs=njobs)(delayed(compute_result)(t1, p1, rho1) for t1, p1, rho1 in tqdm(params))
-    # resultados = np.array(resultados)
-    # np.save('resultados_rho.npy', resultados)
+    # Define la función para calcular el resultado para un par (t1, p1, rho1)
+    def compute_result(t1, p1, rho1):
+        util, prob, profit = compute_expected_utility_vec_random_ac(trace, t1, p1, c11, c21, c31, n, T, ite=1000000, rho1=rho1)
+        return p1, t1, util, prob, profit, rho1
+    # resultados rho
+    params = [(t1, p1, rho1) 
+              for p1 in np.linspace(9000, 10000, 50) 
+              for t1 in np.linspace(450, 600, 50)
+              for rho1 in [None, 1e-8, 1e-7, 1e-6, 1e-5, 1e-4]]
+    resultados = Parallel(n_jobs=njobs)(delayed(compute_result)(t1, p1, rho1) for t1, p1, rho1 in tqdm(params))
+    resultados = np.array(resultados)
+    np.save('resultados_rho.npy', resultados)
 
     # Define la función para calcular el resultado para un par (t1, p1, c31)
     def compute_result(t1, p1, c31_param):
