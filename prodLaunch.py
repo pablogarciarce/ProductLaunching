@@ -177,5 +177,5 @@ def main(njobs=44):
 
 
 if __name__ == '__main__':
-    main(njobs=44)
+    main(njobs=66)
     
