@@ -126,7 +126,7 @@ def compute_expected_utility_multiple_items(trace, t1, p1, c11, c21, c31, n, T, 
     c1 = fact * (c11 * t1 + c21 * e1 + c31 * q1).mean()
 
     # Solving the knapsack problem for each buyer
-    budgets = np.random.uniform(10000, 30000, (n, ite))
+    budgets = np.random.uniform(10000, 20000, (n, ite))
     total_sales = knapsack_solver(
             np.array([u1, u2, u3]), 
             np.array([p1*np.ones([ps.shape[0]]), ps[:, 0], ps[:, 1]]),
@@ -165,7 +165,7 @@ def main(njobs=44):
     params = [(t1, p1) for p1 in np.linspace(3000, 15000, 100) for t1 in np.linspace(0, 2000, 100)]
     resultados = Parallel(n_jobs=njobs)(delayed(compute_result)(t1, p1) for t1, p1 in tqdm(params))
     resultados = np.array(resultados)
-    np.save('resultados_multiple_items_30000.npy', resultados)
+    np.save('resultados_multiple_items.npy', resultados)
 
 
 if __name__ == '__main__':
