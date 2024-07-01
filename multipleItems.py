@@ -138,7 +138,7 @@ def compute_expected_utility_multiple_items(trace, t1, p1, c11, c21, c31, n, T, 
     
     profit = s * p1 - c1
     
-    return util, profit
+    return util, profit, s/n
 
 def main(njobs=44):
     try:
@@ -158,14 +158,14 @@ def main(njobs=44):
 
     # Define la función para calcular el resultado para un par (t1, p1)
     def compute_result(t1, p1):
-        util, _ = compute_expected_utility_multiple_items(trace, t1, p1, c11, c21, c31, n, T, ite=100000)
-        return p1, t1, util
+        util, _, prob = compute_expected_utility_multiple_items(trace, t1, p1, c11, c21, c31, n, T, ite=100000)
+        return p1, t1, util, prob
 
     # resultados generales
     params = [(t1, p1) for p1 in np.linspace(3000, 15000, 100) for t1 in np.linspace(0, 2000, 100)]
     resultados = Parallel(n_jobs=njobs)(delayed(compute_result)(t1, p1) for t1, p1 in tqdm(params))
     resultados = np.array(resultados)
-    np.save('resultados_multiple_items.npy', resultados)
+    np.save('resultados_multiple_items_prob.npy', resultados)
 
 
 if __name__ == '__main__':
