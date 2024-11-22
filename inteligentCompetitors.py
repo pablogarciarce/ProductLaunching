@@ -159,7 +159,7 @@ def compute_expected_utility_inteligent_competitors(trace, ts, ps, c11, c21, c31
     util2 = np.sum([comb(n, l) * pi2**l * (1 - pi2)**(n - l) * utility_func(l * ps[1] - c2, rho1) for l in range(n+1)])
     util3 = np.sum([comb(n, l) * pi3**l * (1 - pi3)**(n - l) * utility_func(l * ps[2] - c3, rho1) for l in range(n+1)])
     
-    return np.array([util1, util2, util3])
+    return util1, util2, util3, pi1, pi2, pi3
 
 def main(njobs=44):
     try:
@@ -223,15 +223,16 @@ def main(njobs=44):
     # Once with optimal values for p2, t2, p3, t3, grid search for optimal t1, p1
 
     def compute_result(t1, p1):
-        util, prob, _ = compute_expected_utility_inteligent_competitors(trace, [t1, t2_optimal_gp, t3_optimal_gp], [p1, p2_optimal_gp, p3_optimal_gp], c11, c21, c31, n, T, ite=100000)
-        return p1, t1, util, prob
+        util1, util2, util3, pi1, pi2, pi3 = compute_expected_utility_inteligent_competitors(trace, [t1, t2_optimal_gp, t3_optimal_gp], [p1, p2_optimal_gp, p3_optimal_gp], c11, c21, c31, n, T, ite=100000)
+        return p1, t1, util1, util2, util3, pi1, pi2, pi3
 
     params = [(t1, p1) for p1 in np.linspace(3000, 15000, 100) for t1 in np.linspace(0, 2000, 100)]
-    resultados = Parallel(n_jobs=njobs)(delayed(compute_result)(t1, p1) for t1, p1 in tqdm(params))
+    #resultados = Parallel(n_jobs=njobs)(delayed(compute_result)(t1, p1) for t1, p1 in tqdm(params))
+    resultados = [compute_result(t1, p1) for t1, p1 in tqdm(params)]
     resultados = np.array(resultados)
     np.save('resultados_inteligent_competitors.npy', resultados)
 
 
 if __name__ == '__main__':
-    main(njobs=66)
+    main(njobs=6)
     
