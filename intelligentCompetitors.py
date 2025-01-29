@@ -39,12 +39,10 @@ def sample_advs(ite, grid):
 def compute_expected_utility_intelligent_competitors(trace, t1, p1, c11, c21, c31, n, T, ite=5000, rho1=None, fact=1000):   
     P = 15000 
     grid2 = np.load('results/results.npy')
-    #grid3 = np.load('results/results.npy')
+    grid3 = np.load('results/results.npy')
     # Generating random variables for j=2,3
     t2, p2 = sample_advs(ite, grid2)
-    # t3, p3 = sample_advs(ite, grid3)
-    t3 = T * beta.rvs(a=2, b=5, size=t2.shape) 
-    p3 = 12000 * beta.rvs(a=2, b=5, size=p2.shape) + 3000
+    t3, p3 = sample_advs(ite, grid3)
     ts = np.array([t2, t3]).transpose()
     ps = np.array([p2, p3]).transpose()
     aes = gamma.rvs(.256**2/.2**2, scale=.2**2/.256, size=(ite, 2))  # so it has mean .256 and variance .04
@@ -100,11 +98,10 @@ def main(njobs=44):
 
     params = [(t1, p1) for p1 in np.linspace(3000, 15000, 100) for t1 in np.linspace(0, 2000, 100)]
     resultados = Parallel(n_jobs=njobs)(delayed(compute_result)(t1, p1) for t1, p1 in tqdm(params))
-    #resultados = [compute_result(t1, p1) for t1, p1 in tqdm(params)]
     resultados = np.array(resultados)
-    np.save('results/results_intelligent_competitors_one_earlycheap.npy', resultados)
+    np.save('results/results_intelligent_competitors.npy', resultados)
 
 
 if __name__ == '__main__':
-    main(njobs=-1)
+    main(njobs=86)
     
