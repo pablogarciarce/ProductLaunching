@@ -95,7 +95,7 @@ def main(njobs=44):
     T = 2000
 
     def compute_result(t1, p1):
-        util, pi, profit = compute_expected_utility_intelligent_competitors(trace, t1, p1, c11, c21, c31, n, T, ite=10000)
+        util, pi, profit = compute_expected_utility_intelligent_competitors(trace, t1, p1, c11, c21, c31, n, T, ite=100000)
         return p1, t1, util, pi, profit
 
     params = [(t1, p1) for p1 in np.linspace(3000, 15000, 100) for t1 in np.linspace(0, 2000, 100)]
@@ -106,5 +106,5 @@ def main(njobs=44):
 
 
 if __name__ == '__main__':
-    main(njobs=86)
+    main(njobs=-1)
     
