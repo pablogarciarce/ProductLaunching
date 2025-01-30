@@ -7,7 +7,7 @@ from joblib import Parallel, delayed
 from tqdm import tqdm
 import arviz as az
 
-from trace import Trace
+from utils import Trace
 
 
 def utility_func(x, rho1):
@@ -88,30 +88,30 @@ def main(njobs=44):
     # resultados = np.array(resultados)
     # np.save('results/results_resol.npy', resultados)
 
-    # Define la función para calcular el resultado para un par (t1, p1, rho1)
-    def compute_result(t1, p1, rho1):
-        util, prob, profit = compute_expected_utility_vec_random_ac(trace, t1, p1, c11, c21, c31, n, T, ite=1000000, rho1=rho1)
-        return p1, t1, util, prob, profit, rho1
-    # resultados rho
-    params = [(t1, p1, rho1) 
-              for p1 in np.linspace(6000, 11000, 50) 
-              for t1 in np.linspace(0, 2000, 100)
-              for rho1 in [None, 1e-8, 1e-7, 1e-6, 5e-6, 1e-5]]
-    resultados = Parallel(n_jobs=njobs)(delayed(compute_result)(t1, p1, rho1) for t1, p1, rho1 in tqdm(params))
-    resultados = np.array(resultados)
-    np.save('results/results_rho2.npy', resultados)
-    # # Define la función para calcular el resultado para un par (t1, p1, c31)
-    # def compute_result(t1, p1, c31_param):
-    #     util, prob, _ = compute_expected_utility_vec_random_ac(trace, t1, p1, c11, c21, c31_param, n, T, ite=1000000)
-    #     return p1, t1, util, prob, c31_param
-    # # resultados c31
-    # params = [(t1, p1, c31) 
-    #           for p1 in np.linspace(3000, 15000, 100) 
+    # # Define la función para calcular el resultado para un par (t1, p1, rho1)
+    # def compute_result(t1, p1, rho1):
+    #     util, prob, profit = compute_expected_utility_vec_random_ac(trace, t1, p1, c11, c21, c31, n, T, ite=1000000, rho1=rho1)
+    #     return p1, t1, util, prob, profit, rho1
+    # # resultados rho
+    # params = [(t1, p1, rho1) 
+    #           for p1 in np.linspace(6000, 11000, 50) 
     #           for t1 in np.linspace(0, 2000, 100)
-    #           for c31 in np.linspace(1, 20, 20)]
-    # resultados = Parallel(n_jobs=njobs)(delayed(compute_result)(t1, p1, c31) for t1, p1, c31 in tqdm(params))
+    #           for rho1 in [None, 1e-8, 1e-7, 1e-6, 5e-6, 1e-5]]
+    # resultados = Parallel(n_jobs=njobs)(delayed(compute_result)(t1, p1, rho1) for t1, p1, rho1 in tqdm(params))
     # resultados = np.array(resultados)
-    # np.save('results/results_c31.npy', resultados)
+    # np.save('results/results_rho2.npy', resultados)
+    # Define la función para calcular el resultado para un par (t1, p1, c31)
+    def compute_result(t1, p1, c31_param):
+        util, prob, _ = compute_expected_utility_vec_random_ac(trace, t1, p1, c11, c21, c31_param, n, T, ite=1000000)
+        return p1, t1, util, prob, c31_param
+    # resultados c31
+    params = [(t1, p1, c31) 
+              for p1 in np.linspace(3000, 15000, 100) 
+              for t1 in np.linspace(0, 2000, 100)
+              for c31 in np.linspace(1, 10, 10)]
+    resultados = Parallel(n_jobs=njobs)(delayed(compute_result)(t1, p1, c31) for t1, p1, c31 in tqdm(params))
+    resultados = np.array(resultados)
+    np.save('results/results_c31.npy', resultados)
 
 
 if __name__ == '__main__':

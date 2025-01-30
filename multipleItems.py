@@ -6,7 +6,7 @@ from joblib import Parallel, delayed
 from tqdm import tqdm
 import arviz as az
 
-from trace import Trace
+from utils import Trace
 
 
 def utility_func(x, rho1):

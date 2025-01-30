@@ -12,7 +12,7 @@ from skopt import gp_minimize
 from skopt.space import Real
 from functools import partial
 
-from trace import Trace
+from utils import Trace
 
 
 def utility_func(x, rho1):
