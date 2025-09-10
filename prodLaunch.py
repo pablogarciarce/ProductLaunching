@@ -62,6 +62,48 @@ def compute_expected_utility_vec_random_ac(trace, t1, p1, c11, c21, c31, n, T, i
     return util, pi, profit
 
 
+def compute_expected_utility_vec_random_ac_multiple(trace, t1, p1, c11, c21, c31, n, T, ite=5000, rho1=None, fact=1000, buyer_risk=5, competitors=2):    
+    ts = [T * beta.rvs(a=1, b=1, size=ite) for _ in range(competitors)]  # 1 1 for uniform, 2 5 for early, 5 2 for late
+    ts = np.column_stack(ts)
+    P = 15000
+    ps = uniform.rvs(loc=3000, scale=P, size=(ite, competitors))
+    aes = gamma.rvs(.256**2/.2**2, scale=.2**2/.256, size=(ite, competitors))
+    mean = .837
+    std = .2
+    cs = beta.rvs(mean*(mean*(1-mean)/std**2-1), (1-mean)*(mean*(1-mean)/std**2-1), size=(ite, competitors))
+    lambda23Tt = aes * (T ** cs - ts ** cs)
+    qs = poisson.rvs(lambda23Tt)
+
+    # Generating buyer random variables
+    w = dirichlet.rvs([1, 2, 1], size=ite)
+    rho = gamma.rvs(buyer_risk, scale=1, size=ite)
+
+    # Generating random variables for j=1
+    acs = trace.sample_random_ac(ite)
+    lambda1_t1 = acs[:, 0] * t1 ** acs[:, 1]
+    lambda1_T = acs[:, 0] * T ** acs[:, 1]
+    lambda1_Tt = acs[:, 0] * (T ** acs[:, 1] - t1 ** acs[:, 1])
+    e1 = poisson.rvs(lambda1_t1, size=ite)
+    eT = poisson.rvs(lambda1_T, size=ite)
+    q1 = poisson.rvs(lambda1_Tt, size=ite)
+
+    # Computing utility
+    u1 = 1 - np.exp(-rho * (-w[:, 0] * t1 / T - w[:, 1] * p1 / P - w[:, 2] * q1 / eT))
+    us = [1 - np.exp(-rho * (-w[:, 0] * ts[:, i] / T - w[:, 1] * ps[:, i] / P - w[:, 2] * qs[:, i] / eT)) - u1 for i in range(competitors)]
+
+    # Computing probability of choice
+    pi = 1 / (1 + sum(np.exp(u) for u in us)).mean()
+    # Estimating the cost
+    c1 = fact * (c11 * t1 + c21 * e1 + c31 * q1).mean()
+
+    # Estimating expected utility
+    util = np.sum([comb(n, l) * pi**l * (1 - pi)**(n - l) * utility_func(l * p1 - c1, rho1) for l in range(n+1)])
+    
+    profit = np.sum([comb(n, l) * pi**l * (1 - pi)**(n - l) * (l * p1 - c1) for l in range(n+1)])
+
+    return util, pi, profit
+
+
 def main(njobs=44):
     trace = Trace()
 
@@ -113,19 +155,32 @@ def main(njobs=44):
     # resultados = np.array(resultados)
     # np.save('results/results_c31.npy', resultados)
     # Define la función para calcular el resultado para un par (t1, p1, c31)
-    def compute_result(t1, p1, buyer_risk):
-        util, prob, _ = compute_expected_utility_vec_random_ac(trace, t1, p1, c11, c21, c31, n, T, ite=1000000, buyer_risk=buyer_risk)
-        return p1, t1, util, prob, buyer_risk
-    # resultados buyer_risk
-    params = [(t1, p1, buyer_risk) 
-              for p1 in np.linspace(3000, 15000, 100) 
-              for t1 in np.linspace(0, 2000, 100)
-              for buyer_risk in np.linspace(1, 10, 10)]
-    resultados = Parallel(n_jobs=njobs)(delayed(compute_result)(t1, p1, buyer_risk) for t1, p1, buyer_risk in tqdm(params))
+    # def compute_result(t1, p1, buyer_risk):
+    #     util, prob, _ = compute_expected_utility_vec_random_ac(trace, t1, p1, c11, c21, c31, n, T, ite=1000000, buyer_risk=buyer_risk)
+    #     return p1, t1, util, prob, buyer_risk
+    # # resultados buyer_risk
+    # params = [(t1, p1, buyer_risk) 
+    #           for p1 in np.linspace(3000, 15000, 100) 
+    #           for t1 in np.linspace(0, 2000, 100)
+    #           for buyer_risk in np.linspace(1, 10, 10)]
+    # resultados = Parallel(n_jobs=njobs)(delayed(compute_result)(t1, p1, buyer_risk) for t1, p1, buyer_risk in tqdm(params))
+    # resultados = np.array(resultados)
+    # np.save('results/results_buyer_risk.npy', resultados)
+
+
+    # Define la función para calcular el resultado para un par (t1, p1)
+    def compute_result(t1, p1, comp):
+        util, prob, _ = compute_expected_utility_vec_random_ac_multiple(trace, t1, p1, c11, c21, c31, n, T, ite=1000000, competitors=comp)
+        return comp, p1, t1, util, prob
+
+    # resultados generales
+    params = [(t1, p1, comp) for p1 in np.linspace(3000, 15000, 100) for t1 in np.linspace(0, 2000, 100) for comp in [2, 4, 6, 8, 10]]
+    resultados = Parallel(n_jobs=njobs)(delayed(compute_result)(t1, p1, comp) for t1, p1, comp in tqdm(params))
     resultados = np.array(resultados)
-    np.save('results/results_buyer_risk.npy', resultados)
+    np.save('results/multiple_comp/results.npy', resultados)
 
 
 if __name__ == '__main__':
-    main(njobs=86)
+    main(njobs=8)
+
     
