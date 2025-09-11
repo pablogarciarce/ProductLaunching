@@ -92,7 +92,7 @@ def compute_expected_utility_vec_random_ac_multiple(trace, t1, p1, c11, c21, c31
     us = [1 - np.exp(-rho * (-w[:, 0] * ts[:, i] / T - w[:, 1] * ps[:, i] / P - w[:, 2] * qs[:, i] / eT)) - u1 for i in range(competitors)]
 
     # Computing probability of choice
-    pi = 1 / (1 + sum(np.exp(u) for u in us)).mean()
+    pi = (1 / (1 + sum(np.exp(u) for u in us))).mean()
     # Estimating the cost
     c1 = fact * (c11 * t1 + c21 * e1 + c31 * q1).mean()
 
@@ -174,13 +174,13 @@ def main(njobs=44):
         return comp, p1, t1, util, prob
 
     # resultados generales
-    params = [(t1, p1, comp) for p1 in np.linspace(3000, 15000, 100) for t1 in np.linspace(0, 2000, 100) for comp in [2, 4, 6, 8, 10]]
+    params = [(t1, p1, comp) for p1 in np.linspace(3000, 15000, 40) for t1 in np.linspace(0, 2000, 40) for comp in [2, 4, 6, 8, 10]]
     resultados = Parallel(n_jobs=njobs)(delayed(compute_result)(t1, p1, comp) for t1, p1, comp in tqdm(params))
     resultados = np.array(resultados)
     np.save('results/multiple_comp/results.npy', resultados)
 
 
 if __name__ == '__main__':
-    main(njobs=8)
+    main(njobs=86)
 
     
