@@ -73,7 +73,7 @@
 % Main title of the paper
 %\title [mode = title]{Supporting product launch decisions through adversarial risk analysis}  
 
-\title [mode = title]{Optimal Product Launch Timing in Uncertain Competitive Markets: A Multi-Agent Adversarial Risk Analysis Framework}
+\title [mode = title]{Optimal Product Launch in Uncertain Competitive Markets: A Multi-Agent Adversarial Risk Analysis Framework}
 % Optimal Product Launch Timing in Uncertain Competitive Markets: A Multi-Agent Adversarial Risk Analysis Framework
 %title]{When to Launch a Product in Uncertain Competitive Markets: A Multi-Agent Adversarial Risk Analysis Perspective
 
@@ -83,7 +83,7 @@
 \tnotemark[1] 
 % Title footnote 1.
 % eg: \tnotetext[1]{Title footnote text}
-\tnotetext[1]{\textbf{\noindent Funding information}: Work supported by the Severo Ochoa Excellence Programme CEX-2023-001347-S. PGA is a staff member hired under the Generation D initiative, promoted by Red.es, an organization attached to the Ministry for Digital Transformation and the Civil Service, for the attraction and retention of talent through grants and training contracts, financed by the Recovery, Transformation and Resilience Plan through the European Union's Next Generation funds. SD was partially funded by the 2020 Fundaci\'{o}n Mujeres Por África  (Women for Africa Foundation) Award from Spain, which contributed to this collaboration and research. SD also acknowledges the National Institute for Theoretical and Computational Sciences (NITheCS) in South Africa. DRI was supported by the AXA-ICMAT Chair in Adversarial Risk Analysis and the Spanish Ministry of Science program PID2021-124662OB-I00. \\  \indent \indent \textbf{Conflict of Interest}: All authors have no conflicts of interest. \\} % and the AFOSR European Office of Aerospace Research and Development award FA8655-21-1-7042.} 
+\tnotetext[1]{\textbf{\noindent Funding information}: Work supported by the Severo Ochoa Excellence Programme CEX-2023-001347-S and the Spanish Ministry of Science program PID2025-172412OB-C21. PGA is a staff member hired under the Generation D initiative, promoted by Red.es, an organization attached to the Ministry for Digital Transformation and the Civil Service, for the attraction and retention of talent through grants and training contracts, financed by the Recovery, Transformation and Resilience Plan through the European Union's Next Generation funds. SD was partially funded by the 2020 Fundaci\'{o}n Mujeres Por África  (Women for Africa Foundation) Award from Spain, which contributed to this collaboration and research. SD also acknowledges the National Institute for Theoretical and Computational Sciences (NITheCS) in South Africa. DRI was supported by the AXA-ICMAT Chair in Adversarial Risk Analysis.  \\  \indent \indent \textbf{Conflict of Interest}: All authors have no conflicts of interest. \\} % and the AFOSR European Office of Aerospace Research and Development award FA8655-21-1-7042.} 
 
 % First author
 %
@@ -213,10 +213,10 @@ analysis \sep Bayesian methods \sep Knapsack problems
 
 \section{Introduction}\label{sec:intro}
  A product’s launch into an intended market is a complex strategic decision that can critically affect both the product’s commercial viability, as well as, in some instances, even the long-term survival of the company. Launch decisions entail accounting for multiple variables including its timing, price, quality, and marketing expenditure, to name but a few, and also depends on the very nature of the product itself, as well as the targeted market segment. In addition, product launch decisions are typically made within a competitive environment characterized by the presence of similar offerings from rival companies. % that also aim to maximize their market share.
-     To further complicate matters, a product launching process frequently involves multiple sources of uncertainties, some involving our own product, such as its `true' quality; others associated with the decisions of competitors, including their release time; others involving those of the consumers, like their actual preferences; and finally, those concerning market conditions, e.g. new market regulations or the future state of the economy.  Given the numerous intervening factors, product launching is a complex business decision for managers and has been the subject of intense modeling work, which we briefly review, emphasizing on the uncertainty and strategic decision aspects.
+     To further complicate matters, a product launch process frequently involves multiple sources of uncertainties, some involving our own product, such as its actual quality; others associated with the decisions of competitors, including their release time; others involving those of the consumers, like their actual preferences; and finally, those concerning market conditions, e.g. new regulations or the future state of the economy.  Given the numerous intervening factors, product launching is a complex business decision for managers and has been the subject of intense modeling work, which we briefly review, emphasizing the uncertainty and strategic decision aspects.
  %game-theoretic approaches, given the strategic nature of the problem.
 
-Of the numerous uncertainties involved at the time of the launch of a product, the launch date has long been of particular importance \citep{hultink1997industrial, harris1967new}. In principle, a company seeks to attain a \textit{first-mover advantage}. However, achieving this depends not only on the strategic intent and quality of their own product, but also on the extent of information available regarding competitors’ products. 
+Of the numerous uncertainties involved at the launch of a product, the launch date is of particular importance \citep{hultink1997industrial, harris1967new}. In principle, a company seeks to attain a \textit{first-mover advantage}. However, achieving this depends not only on the strategic intent and quality of their own product, but also on the extent of information available regarding competitors’ products. 
 The strategic necessity of anticipating competitive entry, and its subsequent impact on optimal pricing and market share, has long been a focal point in the operations literature, particularly for technology products \citep{mesak1990impact}. While a firm's own strategic intent is an endogenous information, optimally responding to anticipated entry is fraught with exogenous uncertainties, as the nature, release timing, and status of the competitors' products are rarely fully known \citep{POULSEN2007129}. 
 %While the former is endogenous information, the latter is fraught with exogenous uncertainties as the true nature and status of the competitors' products is never fully known \citep{POULSEN2007129}. 
 It is expected though that a first-mover will gain an initial share of niche market segments, which comes along with the benefits of brand recognition and loyalty. However, it can also result in pitfalls, since any defects remaining in the product at the time of launch  will be capitalized on by competitors \citep{WU2019138}, potentially resulting in future market shrinkage.
@@ -233,8 +233,8 @@ Focusing on a specific pricing strategy, \cite{lotfi2024skim} developed an optim
   finding that the effectiveness of this strategy highly depends on the  repeat purchases rate.
 Several authors have also addressed the impact of multiple supply-chain echelons when deciding the price of the product at launch \citep{Wei2013, Wang2017, SaneZerang2018,   Taleizadeh2019}.  Other authors have paid attention to the price-advertising pair within oligopolistic competition %when launching 
  \citep{golan2000estimating}. For certain new products that may need approval before their launch,  such as a new pharmaceutical drug, \cite{limon2023sequential} provides a holistic examination of adopting a sequential versus a concurrent product development approach by companies, under competition and other uncertainties. Under demand uncertainty for a new product, \cite{ hitsch2006empirical} used dynamic programming to monitor product sales, which can also guide a company to exit a market if sales are low. 
- On the other hand, addressing demand uncertainty, \cite{balter2025innovation} modeled a monopolist decision on the timing, quality, and positioning of a new product relative to an established one, finding that uncertainty often delays the introduction and that such new product may be added alongside, rather than immediately replacing, the old one. 
-Overall, the conclusion is that the launch of a new niche product by a company in a competitive market is indeed a complex decision, in which a large part of the product's success depending on the `optimal' timing of the launch \citep{hultink1997industrial, savin2005optimal, calantone2007clustering}.
+ On the other hand, addressing demand uncertainty, \cite{balter2025innovation} modeled a monopolist decision on the timing, quality, and positioning of a new product relative to an established one, finding that uncertainty often delays the introduction and that such new product may be added alongside, rather than immediately replacing the old one. 
+Overall, the conclusion is that the launch of a new niche product by a company in a competitive market is a complex decision, in which a large part of the product's success depends on the `optimal' timing of the launch \citep{hultink1997industrial, savin2005optimal, calantone2007clustering}.
  
  %, with \cite{savin2005optimal} specifically focusing on a duopolistic market scenario and analytically evaluating the effect on sales (and potential lost revenues) of one of the two companies, for different launch times.
 
@@ -250,7 +250,7 @@ Overall, the conclusion is that the launch of a new niche product by a company i
 
  
   %
-Thus, in part to mitigate the above mentioned issue, this paper introduces a broad decision analytic framework  based on adversarial risk analysis (ARA) to support product launch decisions by a company.  An in-depth computational and conceptual comparison between game-theoretic and ARA approaches 
+Thus, in part to mitigate the above mentioned issue, this paper introduces a broad decision analytic framework to support product launch decisions by a company  based on adversarial risk analysis (ARA).  An in-depth computational and conceptual comparison between game-theoretic and ARA approaches 
 %(in general contexts with a focus on homeland security and defense  problems)  
 in the security domain is provided in \cite{banks2022}.
  ARA  business applications are much less frequent with 
@@ -260,10 +260,10 @@ in the security domain is provided in \cite{banks2022}.
  \cite{rasines2024personalized} who dealt with personalized pricing 
  strategies targeting a single buyer; and \cite{softearlier} 
    who considered software launch timing decisions with a single buyer. 
-   
+   %
    Thus, in this paper
  %  in the software release domain.
-  our main contributions  are the following:
+  our main contributions are:
    \begin{itemize}  
    \item A more realistic model for launching a product in which a company simultaneously chooses multiple 
    launch product features in the presence of multiple competitors and a diverse consumer base, providing a novel ARA-based perspective,  mitigating standard common-knowledge conditions  in earlier game-theoretic based approaches including those drawing on real options;
@@ -443,9 +443,9 @@ denote the corresponding production costs. Then, the
  The compactness  of $ {\cal  X}^1$  and the continuity of $\psi $ with respect to ${\bm x}^1$ would guarantee the existence of an optimal ${\bm x}^{1}_*$. The continuity of the expected utility would easily derive from the continuity of $u_1$ in $p_1$ and of $\pi$ in ${\bm x}^1$, which is later addressed.
   \begin{proposition}
 \label{lemma_1}
-If the utility function $u_1$ is continuous in $p_1$ for fixed $j$ and $c$, 
-the purchasing probability $\pi  $ in continuous in $x_1$ and 
-${\cal X}_1$ is compact, then $x_1^*$ exists.
+If the utility function $u_1$ is continuous in $p_1$ for fixed $j$ and $c_1$, 
+the purchasing probability $\pi  $ in continuous in $x^1$ and 
+${\cal X}_1$ is compact, then $x_*^1$ exists.
 \end{proposition}
 
   
@@ -482,7 +482,7 @@ we would estimate
 \end{equation}
 A direct application
 of the dominated convergence theorem \citep{royden2010real} enables proving the existence and continuity 
-of the purchase probabilities.
+of the purchase probabilities \eqref{eq:pi}.
 \begin{proposition}
 If the utilities $u_b$ in the support of 
 $U_b$ are almost surely (a.s.) integrable with respect to the corresponding $p_b$, the probabilities
@@ -504,8 +504,8 @@ or not the expected utility derived from the first company's product is maximal 
 %%%%%  DISCRETE CHOICE MODEL 
    Observe though that since we are not advising the buyers, just the first producer,
     we could expect them not to behave as \textit{expected utility maximizers}, e.g.\ due to their access only to partial information about products, their cognitive biases, their use of decision heuristics  or implementation errors within their decision-making processes. 
-    An alternative approach to estimate buyer choice probabilities 
-    uses discrete choice models from the consumer behavior literature \citep{mcfadden1973conditional,train}, leading to random utility 
+    An alternative approach from the consumer behavior literature \citep{mcfadden1973conditional,train} to estimate buyer choice probabilities 
+    uses discrete choice models, leading to random utility 
     models and probabilistic choices, see De Palma et al. (\citeyear{de2008risk}) for 
     a discussion and comparison with expected utility models.    
     A prime example, later illustrated, is the multinomial logit (MNL) version of the Plackett-Luce model \citep{luce59, f5079a1-8ca5-3727-a405-0a82390327b7} which assumes an underlying weighted additive utility function 
@@ -623,7 +623,7 @@ From a modeling perspective,
 %We end  this section by discussing how to model the involved  
 %company random ingredients.
  first, $P_i$ and $C_i$ respectively model the first company's beliefs about the price $p_i$ and cost $c_i$ of the $i$-th company.
-   A heuristic would base it on $p_1$ and $c_1$ with some uncertainty around such values, say normal distributions with  respective means $p_1$ and $c_1$ and standard deviations 
+   A heuristic would base it on their own $p_1$ and $c_1$ with some uncertainty around such values, say normal distributions with  respective means $p_1$ and $c_1$ and standard deviations 
  reflecting our uncertainty.
   Next, $U_i$ would model the first company's beliefs about the 
   $i$-th company's preferences.   One could consider a parametric utility function model and introduce a distribution over the parameters; again, as a baseline, we could use $u_1$ and add some uncertainty around its parameters. 
@@ -721,7 +721,8 @@ beliefs about potentially relevant exogenous uncertainties $s$.
 \label{kk}
 \end{figure} 
    
-   For the subsequent narration, remove the notational dependence on $t_1$ and refer to the time, price, and quality of the software launched by the supported company as $(t_1, p_1, q_1)$, and the corresponding number of bugs and cost as $(e_1, c_1)$. 
+\noindent
+For the subsequent narration, remove the notational dependence on $t_1$ and refer to the time, price, and quality of the software launched by the supported company as $(t_1, p_1, q_1)$, and the corresponding number of bugs and cost as $(e_1, c_1)$. 
 For the other companies within this market,
  let us characterize their attributes as
   $(t_i, p_i, q_i, e_i, c_i)$, for $i=2,...,l$. Following the arguments in Section 2, %since we have incomplete information about the competitors, 
@@ -765,15 +766,15 @@ The optimal decision is reached by finding the timing and price that provides th
 %%%%%%%%%%%%%%%%%%%%%%%
 %\subsection{Introduction}
 
-We demonstrate our proposed framework through a case study in software launching covering its entailed modeling and computational issues.
+Let us demonstrate the proposed framework through a case study in software launching covering its entailed modeling and computational issues.
 %Software development is a major global economic activity. 
-  It is widely recognized that software at the time of launch can be susceptible to failures which can lead to potential and far-reaching consequences.
+  It is widely recognized that software at the time of launch can be susceptible to failures which can lead to potential and far-reaching consequences
   %It is well-known that software %typically performs multiple tasks and involves connections with various databases. Thus, it
 %is susceptible to failures with potentially very impactful consequences %which can be very expensive and even  dangerous to human life 
 \citep{couce}.  Hence, software companies %usually
- undertake rigorous testing processes to ascertain its 
+ undertake testing processes to ascertain its 
    quality and reliability before release. Therefore, developing optimal policies and strategies 
-   for software launching is a crucial business decision, 
+   for software launch is a crucial business decision, 
  %plagued with uncertain ingredients.
 %, some related to endogenous phenomena (say, the number of bugs in the software), while others 
  % relate to exogenous phenomena (like the competitors' release decisions, or the purchase decisions by buyers). 
@@ -781,17 +782,17 @@ We demonstrate our proposed framework through a case study in software launching
  (software-producers competition for buying consumers)  with multiple 
 decision-makers with 
 adversarial interests and multiple objectives (see \cite{ruggeri2018decision} for 
-  a broad overview, % covering decision and game theory methods for software release, 
-    mostly focused on deciding the launching time).
+  a broad overview % covering decision and game theory methods for software release, 
+    focused on deciding the launching time).
 %of release to market. 
- For our demostration, we adapt the framework outlined in Section 2 to support 
+ For our demonstration, we adapt the framework outlined in Section 2 to support 
 a software development company in choosing multiple release features, in the presence of multiple competitors and multiple buyers, thereby greatly extending the work in \cite{softearlier} who 
  focused on the standard software engineering problem of deciding 
  how long to test before releasing a product, in the presence of just one buyer.  
  As in the basic model from Section 2, we 
  consider a scenario in which customers only buy one product within the product development cycle, as in, e.g., universities investing in just one 
  ERP system for, say, the next five years. This is  
-   revisited in Section 4  when there are multiple product purchases. 
+   revisited in Section 4  where multiple product purchases are considered. 
  
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{The case}\label{subsec:example}
@@ -820,7 +821,7 @@ before and after releasing the software, being similar to the classical ones in 
 \begin{equation}\label{cost-game}
 c_1 (t) = c_{11} t + c_{21} e_1(t) + c_{31} \left[e_1(T)-e_1(t)\right], 
 \end{equation} 
-where $c_{11}$ is the cost of testing per unit time until release; $c_{21}$, the cost of removing a fault during testing;  and $c_{31}$, the cost of removing it after release. Typically, fixing an error is more expensive after release so
+where $c_{11}$ is the testing cost  per unit time until release; $c_{21}$, the cost of removing a fault during testing;  and $c_{31}$, the cost of removing it after release. Typically, fixing an error is more expensive after release so
   that $c_{31} > c_{21}$. Other terms could be added to \eqref{cost-game} to model additional company expenses, such as staff costs, but we adopt this simpler version for illustrative purposes.  %Alternatively, one could replace $N_1(T)$ in (\ref{cost-game}) by $N_1$, 
    % the initial unknown number of faults in the software.
 Observe that $ e_1(T)-~e_1 (t)= q_1 (t)$ represents the 
@@ -843,11 +844,11 @@ Therefore, by deciding the release time $t$, we obtain the quality proxy $q_1(t)
 \end{equation}
 with non-negative weights $w_1, w_2, w_3$ such that $w_1 + w_2 + w_3=1$.  
  The variables $t$, $p$, and $q$ are normalized so that the utility is not dependent on the 
-  natural units chosen (such as year, euros, and number of bugs left); the weights place the three objectives on a common scale, while $\rho$ is a risk aversion coefficient corresponding to a constant absolute risk averse (CARA) multi-objective utility function, see  \cite{gonzalez2018utility} for details.
+  natural units chosen (such as year, euros, and number of bugs left); the weights place the objectives on a common scale, while $\rho$ is a risk aversion coefficient corresponding to a constant absolute risk averse (CARA) multi-objective utility function, see  \cite{gonzalez2018utility} for details.
   
   Rather than employing the simulation-optimization approach entailed by 
   \eqref{eq:pi} to assess the purchase probabilities
-  $\pi(t_1,p_1)$, let us use, an MNL discrete choice model,
+  $\pi(t_1,p_1)$, let us use an MNL discrete choice model,
     as in \eqref{kkroswell},%$ (or softmax in the machine learning literature \citep{bishop})  
     %given through
 \begin{equation*}
@@ -931,7 +932,7 @@ We use the parametric setting and data in
 Appendix \ref{kkappendix} to exemplify the case study, though 
  it is later thoroughly checked through sensitivity analysis. 
 In particular, we adopt a power-law NHPP process ($i.e.$ with mean function $m(t)=at^c$) and gamma priors over its parameters $a$ and $c$ to predict the bugs of the software of the first company, and versions with higher variance for the other two companies. Initially we use a risk-neutral utility function (identity). Samples from the relevant posterior distributions are obtained through a Hamiltonian MC method \citep{nuts} 
-  as implemented within the Python package $pymc$, and used to predict the number of bugs. 
+  as implemented within the Python package $pymc$, used to predict the number of bugs. 
 
  \subparagraph{{\bf Optimization.}} Algorithm \ref{alg:generate_sample} estimates the expected utility for each decision $t_1$ and $p_1$.
   In this experiment, the probability models $T_j$, $P_j$, 
@@ -939,10 +940,10 @@ In particular, we adopt a power-law NHPP process ($i.e.$ with mean function $m(t
  the decision variables $(t_1, p_1)$ for $j=2, 3$ (Appendix A). Hence we  
    run steps 4-6 in Algorithm \ref{alg:generate_sample} only once, for all combinations of $(t_1, p_1)$.
   
-%The expected utility maximization problem (7) is handled through Bayesian optimization (BO) \citep{gramacy} with the $gp\_minimize$ function from $skopt$. It leverages Gaussian process approximations to model the objective function, reducing the number of expensive calls to Algorithm 1. Our process employs a {\em Matern kernel}, which allows us to model a wide variety of objective functions by adjusting its hyperparameters. We perform the optimization allowing for up to 200 calls to the objective function, which in our case, is the negative expected utility, since we aim to maximize it.  This provides as optimal decision $(t_1^* =356, p_1^* =8162)$ yielding an expected profit of $2,840,987$.
+%The expected utility maximization problem (7) is handled through Bayesian optimization (BO) \citep{gramacy} with the $gp\_minimize$ function from $skopt$. It leverages Gaussian process approximations to model the objective function, reducing the number of expensive calls to Algorithm 1. Our process employs a {\em Matern kernel}, which allows us to model a wide variety of objective functions by adjusting its hyperparameters. We perform the optimization allowing for up to 200 calls to the objective function, which in our case, is the negative expected utility, since we aim to maximize it.  This provides as optimal decision $(t_1^* =356, p_1^* =8162)$ yielding an expected profit of $2.840.987$.
 
-{\color{green}}A fundamental computational challenge in multi-agent adversarial risk models is the curse of dimensionality. As the number of strategic competitors and the dimensionality of the decision space increase, exact analytical evaluation of the expected utility surface becomes computationally intractable. To overcome this bottleneck and efficiently navigate the high-dimensional search space, the expected utility maximization problem (7) is handled through Bayesian optimization (BO) \citep{gramacy}. We implement this using the $gp\_minimize$ function from $skopt$, which leverages Gaussian process approximations to construct a surrogate model of the objective function, thereby drastically reducing the number of computationally expensive Monte Carlo calls to Algorithm 1. 
-It specifically employs a \textit{Matern kernel}, providing the flexibility to model a wide variety of complex, non-linear objective functions by {\ tuning its hyperparameters through marginal-likelihood maximization}. We perform the optimization allowing for up to 200 evaluations of the objective function (the negative expected utility, as we seek to maximize it). This computationally efficient search yields an optimal decision of $(t_1^* =356, p_1^* =8162)$, resulting in an expected profit of $2,840,987$.
+{\color{green}}A fundamental computational challenge in multi-agent adversarial risk models is the curse of dimensionality. As the number of strategic competitors and the dimensionality of the decision space increase, exact analytical evaluation of the expected utility surface becomes computationally intractable. To overcome this bottleneck and efficiently navigate the high-dimensional search space, the expected utility maximization problem (7) is handled through Bayesian optimization (BO) \citep{gramacy}. We implement this using the $gp\_minimize$ function from $skopt$, which leverages Gaussian process approximations to construct a surrogate model of the objective function, drastically reducing the number of expensive Monte Carlo calls to Algorithm 1. 
+It specifically employs a \textit{Matern kernel}, providing the flexibility to model a wide variety of complex, non-linear objective functions by {\ tuning its hyperparameters through marginal-likelihood maximization}. We perform the optimization allowing for up to 200 evaluations of the objective function (the negative expected utility, as we seek to maximize it). This search yields an optimal decision of $(t_1^* =356, p_1^* =8162)$, resulting in an expected profit of $2,840,987$.
 
 As mentioned, optimization can be accomplished through various methods. 
 Table \ref{tab:optimizacion_transposed} displays  
@@ -954,7 +955,7 @@ results attained with three of them (BO, simulated annealing, brute force) and e
 \hline
 Bayesian optimization & 8162 & 356 & 2840987 & 55\\
 Simulated annealing   & 7711 & 759 & 2782931 & 32\\
-Brute force           & 8333 & 283 & 2840731  & 7202\\
+Brute force           & 8333 & 283 & 2841380  & 7202\\
 \end{tabular}
 \caption{Optimal solutions with three optimization methods.}
 \label{tab:optimizacion_transposed}
@@ -962,11 +963,11 @@ Brute force           & 8333 & 283 & 2840731  & 7202\\
 The setup for simulated annealing is described in
 Appendix \ref{kkappendix}.  Brute force is also used
 to explore the expected utility surface.
- Specifically, we employ a grid of $100 \times 100$ points over the feasible set $t_1\in[0, 2000]$ and $p_1\in[3000, 15000]$, and an MC sample size of $10^6$. Figure \ref{fig:isolines} represents the estimated expected utility for different $t_1$ and $p_1$ values, with $t_1$ in the $x$-axis, $p_1$ in the $y$-axis, and color-coded 
+ Specifically, we employ a grid of $100 \times 100$ points over the feasible set $t_1\in[0, 2000]$ and $p_1\in[3000, 15000]$, and an MC sample size of $10^6$. Figure \ref{fig:isolines} represents the estimated expected utility for different $t_1$ and $p_1$ values ($t_1$ in $x$-axis, $p_1$ in $y$-axis), and color-coded 
  expected utility as on its right-hand side. 
   The optimal 
 decision would be $(t_1^* =283, p_1^* =8333)$
-yielding an expected profit of $2,840,731$, close to the BO solution in value terms. Figure \ref{fig:p1_15000} represents the estimated expected utility as a function of $t_1$ for the 
+yielding an expected profit of $2.841.380$, close to the BO solution in value terms. Figure \ref{fig:p1_15000} represents the estimated expected utility as a function of $t_1$ for the 
 identified optimal price $p_1^*$, for MC sample sizes 
  $10^4$, $10^5$, and $10^6$, suggesting a relatively flat optimal expected utility surface and comparatively high variance for smaller MC sample sizes. An MC size of $10^6$ is fixed for the rest of the exploration.
 
@@ -1030,9 +1031,9 @@ modify the price as provided by this curve.
 %%%%%%%%%%%%%%%%%%%%%%%
 \subparagraph{{\bf Strategic robustness and tipping points.}} 
 % We complete the study with several sensitivity analysis. To start with, let us study the sensitivity with respect to the buyers' risk aversion coefficient 
-To extract actionable managerial insights and validate the stability of our proposed approach, we systematically pressure-test the optimal strategy against variations in key parameters. Because our framework efficiently maps the high-dimensional expected utility surface, we can identify critical {\em tipping points} where a company must fundamentally alter its launch strategy. 
+To extract actionable managerial insights and validate the stability of our proposed approach, we systematically stress-test the optimal strategy against variations in key parameters. Because our framework efficiently maps the high-dimensional expected utility surface, we can identify critical {\em tipping points} where a company must fundamentally alter its launch strategy. 
 
-First, we examine the optimal response to shifts in the consumer risk aversion coefficient}
+First, examine the optimal response to shifts in the consumer risk aversion coefficient}
 $\rho$ %as expressed 
  in \eqref{eq:utility}, representing e.g. different demographic groups. 
 % which affects the function shape, thus impacting 
@@ -1048,14 +1049,14 @@ $\rho$ %as expressed
     \begin{tabular}{c|cccc}
         $\rho$ & $p_1$ & $t_1$ & Exp. Utility & Exp. Prob \\
         \hline
-        1  & 15000  & 2000  & 3,601,065  & 0.28 \\
-        2  & 11364  & 2000  & 2,879,161  & 0.31 \\
-        3  & 9303   & 384   & 2,809,326  & 0.39 \\
-        4  & 8697   & 343   & 2,832,774  & 0.42 \\
-      {\bf   5}  & {\bf 8333}   & {\bf 283}   & {\bf 2,840,731}  &   {\bf  0.44} \\
-        6  & 8212   & 242   & 2,846,952  & 0.45 \\
-        7  & 8212   & 242   & 2,846,556  & 0.45 \\
-        8  & 8091   & 242   & 2,844,337  & 0.46 \\
+        1  & 15000  & 2000  & 3.601.065  & 0.28 \\
+        2  & 11364  & 2000  & 2.879.161  & 0.31 \\
+        3  & 9303   & 384   & 2.809.326  & 0.39 \\
+        4  & 8697   & 343   & 2.832.774  & 0.42 \\
+      {\bf   5}  & {\bf 8333}   & {\bf 283}   & {\bf 2.841.380}  &   {\bf  0.44} \\
+        6  & 8212   & 242   & 2.846.952  & 0.45 \\
+        7  & 8212   & 242   & 2.846.556  & 0.45 \\
+        8  & 8091   & 242   & 2.844.337  & 0.46 \\
      %   9  & 8091   & 202   & 2,840,813  & 0.46 \\
      %   10 & 8212   & 222   & 2,841,712  & 0.45 \\
     \end{tabular}
@@ -1097,7 +1098,7 @@ We next perform sensitivity analysis with respect to $c_{31}$ in \eqref{cost-gam
    %More interestingly, the optimal release time increases with the cost in an attempt to reduce the expensive post-release interventions by reducing the number of bugs present until it reaches the latest possible release time, making the cost negligible (and thus the expected utility does not further decrease). 
    More interestingly, the framework identifies a critical strategic tipping point regarding  release time. As  Figure \ref{fig:c31t1} illustrates, the relationship is not merely linear: once the post-release penalty ($c_{31}$) crosses a specific threshold, the optimal strategy undergoes a severe regime change. The company abandons early market entry entirely, deferring the launch to the latest possible date ($t_1^* = 2000$) to guarantee negligible post-release bug costs. This demonstrates the model's ability to warn decision-makers when incremental cost increases demand radical strategic pivots.
    
-   Finally, we perform a sensitivity analysis with respect to the number of adversaries, initially fixed at  2. Figure \ref{fig:num_adv} shows the expected utility surfaces for different values of $n$. Observe that, as the number of competitors increases, the location of the optimal solution shifts noticeably. For low number of competitors, the optimal solution favors early release times and higher prices. However, as such number grows, the competitive pressure forces the supported company to move towards later releases and lower prices, seeking to capture market share with a higher-quality product. In addition, and importantly, expected utility surfaces become steeper in these regions, indicating higher sensitivity.
+   Finally, we perform a sensitivity analysis with respect to the number of competitors, initially fixed at  2. Figure \ref{fig:num_adv} shows the expected utility surfaces for different values of $n$. Observe that, as the number of competitors increases, the location of the optimal solution shifts noticeably. For low number of competitors, the optimal solution favors early release times and higher prices. However, as such number grows, the competitive pressure forces the supported company to move towards later releases and lower prices, seeking to capture market share with a higher-quality product. In addition, and importantly, expected utility surfaces become steeper in these regions, indicating higher sensitivity.
 
    \begin{figure}
        \centering
@@ -1124,7 +1125,7 @@ We next perform sensitivity analysis with respect to $c_{31}$ in \eqref{cost-gam
       taking into account forecasts of the 
   competitors' launching behavior drawn on the uncertainty about their expected utility.  For this, we employ Algorithm \ref{alg:generate_sample} to estimate the expected utility of the other companies.
  Next, the competitors' launching decisions are modeled as random variables with probability density functions proportional to their expected utilities, sampled through MC.
-We employ BO with a Gaussian process to find the optimal decision $(t_1^*=263, p_1^*=7000)$, resulting in an expected profit of $2,282,981$, smaller than that attained in Section 
+We employ BO with a Gaussian process to find the optimal decision $(t_1^*=263, p_1^*=7000)$, resulting in an expected profit of $2.282.981$, smaller than that attained in Section 
  \ref{subsec:example}, since 
   competitors are modeled as strategic and maximizing expected utility. This remarks the 
    importance of modeling in detail 
@@ -1200,62 +1201,65 @@ Conversely, Figures \ref{fig:utility_lateexpensive} and \ref{fig:probs_lateexpen
     
 %Interestingly, these results are compatible with competitors assuming different risk aversion for the buyers: when compared with Figure \ref{fig:buyer_risk}, Figure \ref{fig:utility_cheapearly} suggests that an aggressive competitor  produces a profit landscape to that associated with a high buyer risk aversion coefficient; in contrast, Figure \ref{fig:utility_lateexpensive} suggest that a careful competitor better aligns with low buyer risk aversion coefficients.
 
+
+
+
 \FloatBarrier
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%% BENCHMARKING AGAINST CLASSICAL FRAMEWORKS %%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 \subsection{Benchmarking against classical frameworks}\label{sec:benchmarking}
 
-To assess the practical benefits of our strategic model, we benchmark the optimal decision from Section~\ref{kk:sidecars} against three baseline paradigms:
+To assess the practical benefits of our strategic model, let us benchmark the optimal decision from Section~\ref{kk:sidecars} against three baseline paradigms:
 \begin{enumerate}
-    \item \emph{Non-adversarial Bayesian model}: competitors are assumed to act non-strategically according to uniform random distributions, as in the level-0 model of Section~\ref{subsec:example}. The optimal decision $(t_{\text{naive}}^*, p_{\text{naive}}^*)$ is evaluated in the strategic environment to quantify the loss caused by ignoring competitive intent.
-    \item \emph{Robust minimax optimization}: the decision maker discards probability distributions over competitor choices and seeks the worst-case optimal strategy:
+    \item \emph{Non-adversarial Bayesian model}. Competitors are assumed to act non-strategically according to uniform random distributions, as in the level-0 model of Section~\ref{subsec:example}, and the optimal decision $(t_{\text{naive}}^*, p_{\text{naive}}^*)$ is obtained. 
+    \item \emph{Robust maximin optimization}. The decision maker discards probability distributions over competitor choices and seeks the worst-case optimal strategy.
     \begin{equation}
-        (t_{\text{minimax}}^*, p_{\text{minimax}}^*) = \arg\max_{(t_1, p_1)} \min_{(t_j, p_j)_{j=2,3}} \psi(t_1, p_1 \mid (t_j, p_j)_{j=2,3}).
+        (t_{\text{rob}}^*, p_{\text{rob}}^*) = \arg\max_{(t_1, p_1)} \min_{(t_j, p_j)_{j=2,3}} \psi(t_1, p_1 \mid (t_j, p_j)_{j=2,3}).
         \label{eq:minimax}
     \end{equation}
     Because consumer utility is decreasing in competitor price and increasing in quality and earliness, adversaries minimize the first firm's payoff by setting the lowest allowable price ($p_j = 3000$) and launching immediately.
-    \item \emph{Classical Nash equilibrium}: competitors are assumed to possess complete information and common knowledge. Parameter uncertainties are replaced by their expected values ($\mathbb{E}[a]=0.256$, $\mathbb{E}[c]=0.837$, $\mathbb{E}[\bm{w}]=[0.25, 0.50, 0.25]$, $\mathbb{E}[\rho]=5.0$), and a pure-strategy equilibrium is computed through iterated best response over the discretized grid.
+    \item \emph{Classical Nash equilibrium}. Competitors are assumed to possess full information and common knowledge. Parameter distributions are replaced by their expected values ($\mathbb{E}[a]=0.256$, $\mathbb{E}[c]=0.837$, $\mathbb{E}[\bm{w}]=[0.25, 0.50, 0.25]$, $\mathbb{E}[\rho]=5.0$), and a pure-strategy equilibrium $(t_{\text{NE}}^*, p_{\text{NE}}^*)$ is computed through iterated best response over the discretized grid.
 \end{enumerate}
-
-Table~\ref{tab:benchmarks} summarizes the optimal decisions, anticipated profits under each assumed model, and realized performance when each strategy is evaluated against the strategic competitors of Section~\ref{kk:sidecars}. In addition, Figure~\ref{fig:benchmark_dropoff} compares the projected and realized profits across the evaluated frameworks.
+%
+Table~\ref{tab:benchmarks} summarizes the optimal decisions, anticipated profits under each assumed model, and realized performance when each strategy is evaluated against the strategic competitors of Section~\ref{kk:sidecars}, to quantify the loss caused by ignoring competitive intent. 
 
 \begin{table}[htbp]
 \centering
 \begin{tabular}{l|cc|c|cc|cc}
 \hline
-Model & $t_1^*$ & $p_1^*$ & $\pi_1$ & Projected & Realized & Difference & Loss \\
- & (days) & & & profit & profit & & (\%) \\
+Model & $t_1^*$ & $p_1^*$ & $\pi_1$ & Projected & Realized & Loss & Loss \\
+ & & & & profit & profit & vs. ARA & (\%) \\
 \hline
 ARA & 263 & 7000 & 0.449 & 2,282,981 & 2,282,981 & 0 & 0.00\% \\
 Naive Bayesian & 283 & 8333 & 0.364 & 2,841,380 & 2,183,766 & 99,214 & 4.35\% \\
-Robust minimax & 849 & 3000 & 0.672 & 370,496 & 1,267,668 & 1,015,312 & 44.47\% \\
+Robust maximin & 849 & 3000 & 0.672 & 370,496 & 1,267,668 & 1,015,312 & 44.47\% \\
 Nash equilibrium & 849 & 3000 & 0.672 & 378,150 & 1,267,668 & 1,015,312 & 44.47\% \\
 \hline
 \end{tabular}
-\caption{Comparative performance of the strategic decision model against classical baselines evaluated in the environment of Section~\ref{kk:sidecars}.}
+\caption{Comparative performance of strategic decision model against classical baselines.}
 \label{tab:benchmarks}
 \end{table}
 
-\begin{figure}[htbp]
-    \centering
-    \includegraphics[width=0.75\textwidth]{images/benchmark_profit_dropoff.png}
-    \caption{Projected profit under the assumed decision model versus realized profit in the strategic environment.}
-    \label{fig:benchmark_dropoff}
-\end{figure}
+As Table~\ref{tab:benchmarks} shows, the naive Bayesian policy leads to an overly high price ($p_{naive}^* = 8333$) under the expectation that rivals will price uniformly across $[3000, 15000]$, projecting a profit of $2,841,380$. However, because strategic competitors optimize their own utilities, the firm's realized purchase probability falls to $0.364$, lowering profit to $2,183,766$. This produces an overestimation gap of $657,614$ and a $4.35\%$ reduction in realized earnings relative to the strategic solution.
+%
+Conversely, the robust maximin formulation results in extreme conservatism. Anticipating adversaries that set $p_j = 3000$, the firm reduces its own price to the minimum boundary $p_{rob}^* = 3000$ and delays launch to $t_{rob}^* \approx 849$ days to reduce post-release defects. Although this achieves a high market share ($\pi_{rob} \approx 0.672$), it sacrifices margin, yielding a realized profit of $1,267,668$ and forfeiting $44.47\%$ of the profit attained under ARA.
+%
+Finally, the Nash equilibrium leads to an aggressive price war down to the boundary $p_{\text{NE}}^* = 3000$ and $t_{\text{NE}}^* \approx 849$ days. When evaluated against competitors who maximize expected utility under private information, this strategy yields $1,267,668$, matching the outcome of the minimax formulation. 
 
-As Table~\ref{tab:benchmarks} and Figure~\ref{fig:benchmark_dropoff} show, the naive Bayesian policy leads to an overly high price ($p_1^* = 8333$) under the expectation that rivals will price uniformly across $[3000, 15000]$, projecting a profit of $2,841,380$. However, because strategic competitors optimize their own utilities, the firm's realized purchase probability falls to $0.364$, lowering profit to $2,183,766$. This produces an overestimation gap of $657,614$ and a $4.35\%$ reduction in realized earnings relative to the strategic solution.
+These comparisons show that the proposed approach avoids both the naive overestimation of non-strategic models and the ruinous price competition of complete-information or worst-case baselines.
 
-Conversely, the robust minimax formulation results in extreme conservatism. Anticipating adversaries that set $p_j = 3000$, the firm reduces its own price to the minimum boundary $p_1^* = 3000$ and delays launch to $t_1^* \approx 849$ days to reduce post-release defects. Although this achieves a high market share ($\pi_1 \approx 0.672$), it sacrifices margin, yielding a realized profit of $1,267,668$ and forfeiting $44.47\%$ of the profit attained under ARA.
 
-Finally, the complete-information Nash equilibrium leads to an aggressive price war down to the boundary $p_{\text{NE}}^* = 3000$ and $t_{\text{NE}}^* \approx 849$ days. When evaluated against competitors who maximize expected utility under private information, this strategy yields $1,267,668$, matching the outcome of the minimax formulation. These comparisons show that the proposed approach avoids both the naive overestimation of non-strategic models and the ruinous price competition of complete-information or worst-case baselines.
+
+
 
 \FloatBarrier
 %%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Multiple item purchases}
 
-We consider now a major modeling variation, departing from the initial 
- single purchase assumption per customer. This would be typical of  
+Consider now this major modeling variation, departing from the initial 
+ single purchase assumption per customer, typical of  
   markets with not-so-expensive products and shorter product 
  life-cycles, as would be, e.g., in the case of the video game industry, but clearly not relevant with high-involvement 
  products.
@@ -1294,10 +1298,10 @@ different variants and solution approaches.
 
 Algorithm \ref{alg:multiple_items} serves to estimate by MC the expected utility and profit for the first company associated with their decision $(t_1, p_1)$, where we assume a segment of $n$ buyers, each with budget $b_k\sim B, k=1,...,n$ and utility model \eqref{eq:utility}, with uncertainty over its weights and risk aversion coefficient, and, as before, two competitors with the rest of the setup as in Section \ref{subsec:example}. 
   The function $solve\_knapsack$ solves the knapsack problem \eqref{knapsack_eq} for products with utilities $u_j$ and prices $p_j$ for $j=1, 2, 3$, and budget $b_k$, returning the total number of sales of the supported company. 
-     Since the number of competitors is small we use explicit enumeration to solve the knapcsack problem. 
+     Since the number of competitors is small, we use explicit enumeration to solve the knapcsack problem. 
 Instructions in common with Algorithm 1 are omitted, except 
  where essential. 
-This algorithm would feed an optimization routine as before. 
+This algorithm would feed an expected utility optimization routine as before. 
 \begin{algorithm}
 \caption{\text{Compute expected utility and profit of decision $t_1, p_1$}} 
 \label{alg:multiple_items}
@@ -1331,11 +1335,11 @@ This algorithm would feed an optimization routine as before.
 
 %%%%%%%%%%%%%%%%%%%
 \paragraph{{\bf Experiment.}}
-  Except when noted, we use the parametric settings from  Section \ref{subsec:example} example, as explained in Appendix A. We assume a uniform distribution for the individual budgets $B\sim U[10000, 20000]$
+  Except when noted, we use the parametric settings from  Section \ref{subsec:example}, as explained in Appendix A. We assume a uniform distribution for the individual budgets $B\sim U[10000, 20000]$
     and perform a brute force search 
  for the optimal launch decision to gain a better understanding of the problem. 
 %
-Figure \ref{fig:multiple_items_isolines} represents the expected utility with respect to $t_1$ and $p_1$. The optimal decision would be $(t_1^* =101, p_1^* =9303)$, yielding an expected utility of $3,130,337$. Figure \ref{fig:multiple_prob} represents the expected purchase probability, which is $0.43$ for the optimal decision.
+Figure \ref{fig:multiple_items_isolines} represents the expected utility with respect to $t_1$ and $p_1$. The optimal decision would be $(t_1^* =101, p_1^* =9303)$, yielding an expected utility of $3.130.337$. Figure \ref{fig:multiple_prob} represents the expected purchase probability, which is $0.43$ for the optimal decision.
  \begin{figure}[htbp]
     \centering 
     \begin{subfigure}{0.49\textwidth}
@@ -1376,13 +1380,13 @@ Therefore, it is optimal to launch the product early, % for  $c_{31}=5000$,
    between time, price and quality of a product launch for its intended market. 
 
 % Our aim in this paper was to present a framework for the `best' strategy for deciding on the launching time and price of a product with for its intended market segment. However, the timing of this launch is to be made under uncertainties from competitors, as well as under uncertainty of the buyer's utility function, knowing that both the company and the buyers aim to maximize their expected utility. 
-Through this research we have contributed towards managerial insights involving the  development and marketing of new niche products, especially with respect to tactical decisions related to `what to launch?', and `when to launch?', which are important determinants of product success \citep{hultink1997industrial, di1999identifying, calantone2007clustering}. 
+Through this research we have contributed towards managerial insights involving the  development and marketing of new niche products, especially with respect to tactical decisions related to `what to launch?', and `when to launch?', important determinants of product success \citep{hultink1997industrial, di1999identifying, calantone2007clustering}. 
 Our analysis underscored the importance of early market entry,  when appropriate conditions hold. By entering the market sooner, a company can ensure a foothold, attract early adopters, and build brand recognition and loyalty. It also showed how pricing decisions are interdependent with timing and quality at the time of launch. An appropriate   pricing strategy can enhance market penetration and maximize profits, especially when combined with strategic launch timing. Our examples also showcased how incorporating ARA methods to model strategic buyer and competitor behavior provides more realistic predictions of market responses.  The impact of the number of competitors as well as of risk aversion were 
 showcased as well. 
 
   Our initial model assumed that buyers act rationally, basing their purchase decisions on observable product signals to maximize expected utility. Discrete choice models were introduced to account for some degree of departures from the perfect rationality associated with expected utility, although further efforts should address 
   capturing important traits such as brand loyalty, social influence, and emotional attachment. %, which significantly influence real-world behavior.
-  In particular, this might affect the independence purchasing assumption  that led to the binomial and mixed-binomial purchasing models employed. One way to model influence would be to consider clusters of customers around consumer leaders (or influencers)  and make the purchase probabilities depend on those of the influencers and the exposure to them of followers.
+  In particular, this might affect the independence purchasing assumptions that led to the binomial and mixed-binomial purchasing models employed. One way to model influence would be to consider clusters of customers around consumer leaders (or influencers)  and make the purchase probabilities depend on those of the influencers and their exposure to followers.
 
 Our analysis has been predominantly static, focusing on a single launch event within a product life-cycle. In 
 many domains, markets are dynamic, and ongoing post-launch adjustments may be crucial for sustained success. In such dynamic environments it may be relevant to consider reinforcement learning strategies as in \cite{gao2022dynamic}. 
@@ -1418,7 +1422,7 @@ The remainder parameters differ from those in \cite{softearlier}. To wit:
          $c_{11}=0.2 \times 1000$, $c_{21}=1 \times 1000 $, $c_{31}=5 \times 1000 $.\footnote{ A multiplying factor of $1000$ has been introduced to scale up the cost so it is non-negligible with respect to product price, although these parameters would be adjusted for each specific case.} Based on the above, we define the company's cost function $c_1 (t)$ as in (\ref{cost-game}). We perform a sensitivity analysis with respect to $c_{31}$.
         \item Fault discovery process $e_1 (t)$. An NHPP with mean function $m_1 (t)= a t^c$ is employed, obtaining $a$ and $c$ samples from the posterior using Hamiltonian MC implemented with the Python library $pymc$. The prior is a Gamma distribution with mean specified using the parameters in \cite{Zeephongsekul1995}, obtained through MLE based on data available 
          in \cite{Okumoto1979}, leading to estimates $\hat{a}=0.256$ and $\hat{c}=0.837$. The standard deviation is set to $0.1$. Based on this posterior, we compute the required predictions.
-    \item When considering level-0 competitors, Section 3.1, they are characterized as follows:
+    \item When considering level-0 competitors, Section 3.1, these are characterized as follows:
     a) Their release times are modeled as  $T_j \sim U [0,2000], j=2,3$; b) Their prices are modeled as $P_j \sim U[3000,15000], j=2,3$; c) For their random fault discovery process $e_j(t)$ of the competitors, $j=2,3$, we use an NHPP with random mean function
        $m_j (t)= \tilde{a} t^{\tilde{c}}$ with $\tilde{a}\sim Gamma(1.638,0.610)$ and   
        $\tilde{c} \sim Beta \left( 2.019, 0.394 \right)$. Observe that $\mathbb{E}(\tilde{a})=0.256, \mathbb{E}(\tilde{c})=0.837$ and $Var(\tilde{a})=Var(\tilde{c})=0.04$ so that there is more uncertainty about the competitors.
@@ -1428,7 +1432,7 @@ The remainder parameters differ from those in \cite{softearlier}. To wit:
     a) Their release time is modeled as  $T \sim 2000 \cdot Beta [a,b]$, with $(a=2, b=5)$ for early launching and $(a=5, b=2)$ for late launching; b) Their prices are modeled as $P_j \sim 3000 + 12000 * Beta [a,b]$, with $(a=2, b=5)$ for cheap launching decisions and $(a=5, b=2)$ for expensive ones; c) The random fault discovery process is modeled following the same NHPP as in the previous case. 
     \item Finally we set up the consumer parameters:
     a) The number of potential buyers is $n=1000$; 
-     b) A Dirichlet distribution for weights $(w_1,w_2,w_3)$ is $Dir (1,2,1)$, indicating that the weight corresponding to the price of the product is higher due to the greater importance of this factor to buyers, while the other weights remain equally likely; c) A gamma distribution for the customer's risk aversion coefficient $\rho$  is $Ga (5, 1)$, indicating a moderately concentrated distribution around the mean value of 5. We perform sensitivity analysis on this value. 
+     b) A Dirichlet distribution for weights $(w_1,w_2,w_3)$ is $Dir (1,2,1)$, indicating that the weight corresponding to the price of the product is higher due to the greater importance of this factor to buyers, while the other weights remain equally likely; c) A gamma distribution for the customer's risk aversion coefficient $\rho$  is $Ga (5, 1)$, indicating a moderately concentrated distribution around a mean value of 5. We perform sensitivity analysis on this value. 
         \end{enumerate}
 
 \paragraph{Simulated Annealing.} We use the following setup for the simulated annealing method. 
